@@ -1,6 +1,7 @@
 from rest_framework import generics
 from .serializers import JobSerializer
 from .models import Job
+from .permissions import IsApplicantOrReadOnly
 
 
 class JobList(generics.ListCreateAPIView):
@@ -11,5 +12,6 @@ class JobList(generics.ListCreateAPIView):
 
 
 class JobDetail(generics.RetrieveUpdateDestroyAPIView):
+    permission_classes = (IsApplicantOrReadOnly,)
     queryset = Job.objects.all()
     serializer_class = JobSerializer
